@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
 import morgan from "morgan";
+import cors from "cors"
 dotenv.config();
 const app = express();
+app.use(cors())
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
