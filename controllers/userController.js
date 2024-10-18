@@ -65,7 +65,8 @@ export const authUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const {limit = 10 ,search, page } = req.params;
+    const users = await User.find().limit(limit)
     res
       .status(200)
       .json({
