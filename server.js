@@ -20,7 +20,7 @@ mongoose
   .catch((err) => console.log(err.message));
 
   app.get('/', (req, res) => {
-    res.status(200).json({ status: 'OK', message: "welcome to GetCard API" });
+    res.status(200).json({ status: 'OK', message: "Welcome to Leon-shop API" });
   })
 
   app.use('/users', userRoute);

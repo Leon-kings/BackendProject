@@ -32,7 +32,7 @@ export const createUser = async (req, res) => {
     res.status(400).json({ status: "failed", message: err.message });
   }
 };
-
+777
 export const authUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
