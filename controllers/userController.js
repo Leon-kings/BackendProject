@@ -6,7 +6,7 @@ export const createUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      res
+      return res
         .status(400)
         .json({
           status: "failed",
@@ -29,15 +29,16 @@ export const createUser = async (req, res) => {
         data: newUser,
       });
   } catch (err) {
-    res.status(400).json({ status: "failed", message: err.message });
+   return res.status(400).json({ status: "failed", message: err.message });
+    
   }
 };
-777
+
 export const authUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      res
+     return res
         .status(404)
         .json({
           status: "failed",
