@@ -19,11 +19,13 @@ mongoose
   .then((res) => console.log("db connected "))
   .catch((err) => console.log(err.message));
 
+
   app.get('/', (req, res) => {
     res.status(200).json({ status: 'OK', message: "Welcome to Leon-shop API" });
   })
 
   app.use('/users', userRoute);
+
 
   app.use('/*', (req, res) => {
     res.status(404).json({ status: 404, message: "Url Not Found" });

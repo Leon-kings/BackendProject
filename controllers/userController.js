@@ -21,13 +21,18 @@ export const createUser = async (req, res) => {
       phone: req.body.phone,
       password: hashedPassword,
     });
+    newUser.save()
+   
     res
       .status(201)
       .json({
         status: "success",
         message: "user created successfully",
         data: newUser,
+        
       });
+   
+      
   } catch (err) {
    return res.status(400).json({ status: "failed", message: err.message });
     
