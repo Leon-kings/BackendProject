@@ -21,10 +21,8 @@ export const createUser = async (req, res) => {
       phone: req.body.phone,
       password: hashedPassword,
     });
-    newUser.save()
-   
     res
-      .status(201)
+      .status(200)
       .json({
         status: "success",
         message: "user created successfully",
