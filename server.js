@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
 import morgan from "morgan";
+
 import cors from "cors"
 dotenv.config();
 const app = express();
@@ -20,13 +21,13 @@ mongoose
   .catch((err) => console.log(err.message));
 
 
-  app.get('/', (req, res) => {
-    res.status(200).json({ status: 'OK', message: "Welcome to Leon-shop API" });
-  })
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'OK', message: "Welcome to Leon-shop API" });
+})
 
-  app.use('/users', userRoute);
+app.use('/users', userRoute);
 
 
-  app.use('/*', (req, res) => {
-    res.status(404).json({ status: 404, message: "Url Not Found" });
-  })
+app.use('/*', (req, res) => {
+  res.status(404).json({ status: 404, message: "Url Not Found" });
+})
