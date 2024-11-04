@@ -2,9 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
+import postRouter from './routes/postRouter.js'
+// const postRouter = require('./routes/postRouter.js')
 import morgan from "morgan";
-
 import cors from "cors"
+
 dotenv.config();
 const app = express();
 app.use(cors())
@@ -26,6 +28,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRoute);
+app.use('/posts', postRouter);
 
 
 app.use('/*', (req, res) => {
