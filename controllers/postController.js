@@ -1,6 +1,5 @@
-
-const Post = require("../models/post");
-const uploadFile = require("../helpers/cloud");
+import Post from "../models/post";
+import uploadFile from "../helpers/cloud"
 
 export const createPost = async (req, res) => {
     const response = await uploadFile(req.file, res);

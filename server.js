@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
 import postRouter from './routes/postRouter.js'
-// const postRouter = require('./routes/postRouter.js')
 import morgan from "morgan";
 import cors from "cors"
 
