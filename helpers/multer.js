@@ -1,7 +1,5 @@
 import path from 'path';
 import multer from 'multer';
-
-
 const upload = multer({
     storage: multer.diskStorage({}),
     fileFilter: (req, file, cb) => {

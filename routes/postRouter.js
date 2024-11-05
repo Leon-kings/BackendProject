@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from "../helpers/multer"
+import upload from "../helpers/multer.js"
 import {createPost , getPost , getPostById , updatePost , deletePost} from "../controllers/postController.js"
 const router = express.Router();
 
