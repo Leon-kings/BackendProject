@@ -1,5 +1,6 @@
-import Post from "../models/post";
-import uploadFile from "../helpers/cloud"
+
+import Post from '../models/post.js';
+import uploadFile from "../helpers/cloud.js"
 
 export const createPost = async (req, res) => {
     const response = await uploadFile(req.file, res);
@@ -9,7 +10,9 @@ export const createPost = async (req, res) => {
             body: req.body.body,
             author: req.user.name
         });
-        res.status(200).json({ status: 'success', message: 'your post was created successfully', newPost})
+        res.status(200).json({ status: 'success', 
+          message: 'your post was created successfully', 
+          newPost})
     }catch(err){
         res.status(400).json({message: err.message})
     }
