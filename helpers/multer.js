@@ -1,23 +1,8 @@
-// import path from 'path';
-// import multer from 'multer';
-// const upload = multer({
-//     storage: multer.diskStorage({}),
-//     fileFilter: (req, file, cb) => {
-//         let ext = path.extname(file.originalname);
-//         if(ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg'){
-//             cb(new Error('File type not supported'), false);
-//         }
-//         cb(null, true);
-//     }
-// });
 
-// // module.exports = upload;
-// export default upload;
-// const express = require('express');
 import express from 'express'
-// const multer = require('multer');
+
 import multer from 'multer';
-// const Post = require('../models/post'); // Assuming your Post model is in the models directory
+
 import Post from '../models/post';
 const router = express.Router();
 
