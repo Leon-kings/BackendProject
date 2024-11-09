@@ -46,6 +46,7 @@ export const authUser = async (req, res) => {
         .json({
           status: "failed",
           message: "user with this email is not fount",
+    
         });
     }
     const isMatch = await bcrypt.compare(req.body.password, user.password);

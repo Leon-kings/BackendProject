@@ -1,29 +1,31 @@
-
 import Post from '../models/post.js';
 import uploadFile from "../helpers/cloud.js"
-
 export const createPost = async (req, res) => {
-    const response = await uploadFile(req.file, res);
-    try{
-        const newPost = await Post.create({
-            image: response.secure_url,
-            body: req.body.body,
-            author: req.user.name
-        });
-        res.status(200).json({ status: 'success', 
-          message: 'your post was created successfully', 
-          newPost})
-    }catch(err){
-        res.status(400).json({message: err.message})
-    }
+  const response = await uploadFile(req.file, res);
+  try{
+      const newPost = await Post.create({
+          image: response.secure_url,
+          body: req.body.body,
+          author: req.body.name
+      });
+      return res.status(200).json({ 
+        status: 'success', 
+        message: 'your post was created successfully',
+        newPost
+      })
+  }catch(err){
+   return res.status(400).json({message: err.message})
+  }
 }
+
+
 
 export const getPost = async (req, res) => {
     try{
         const posts = await Post.find();
-        res.status(200).json(posts)
+        return res.status(200).json(posts)
     } catch(err){
-        res.status(400).json({message: err.message})
+      return res.status(400).json({message: err.message})
     }
 }
 
@@ -32,9 +34,9 @@ export const getPostById = async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
       if (!post) throw Error("Post not found");
-      res.json(post);
+      return res.json(post);
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      return res.status(404).json({ message: error.message });
     }
   };
   
@@ -46,12 +48,12 @@ export const getPostById = async (req, res) => {
         new: true,
       });
       if (!post) throw Error("Post not found");
-      res.json({
+      return res.json({
         status: "success: Post updated successfully",
         post,
       });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      return res.status(400).json({ message: error.message });
     }
   };
   
@@ -61,9 +63,9 @@ export const getPostById = async (req, res) => {
     try {
       const post = await Post.findByIdAndDelete(req.params.id);
       if (!post) throw Error("Post not found");
-      res.json({ message: "Post deleted successfully" });
+      return res.json({ message: "Post deleted successfully" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   };
 
