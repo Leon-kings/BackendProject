@@ -17,7 +17,7 @@ export const createTestimony = async (req, res) => {
       testimony: req.body.testimony,
    
     });
-    res
+  return res
       .status(200)
       .json({
         status: "success",
@@ -36,7 +36,7 @@ export const getTestimony = async (req, res) => {
     try {
       const {limit = 10 ,search, page } = req.params;
       const testimony = await Testimony.find().limit(limit)
-      res
+    return res
         .status(200)
         .json({
           status: "success",
@@ -44,6 +44,6 @@ export const getTestimony = async (req, res) => {
           data: testimony,
         });
     } catch (err) {
-      res.status(400).json({ status: "failed", message: err.message });
+    return res.status(400).json({ status: "failed", message: err.message });
     }
   };

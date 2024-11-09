@@ -5,7 +5,7 @@ import userRoute from './routes/userRouter.js'
 import postRouter from './routes/postRouter.js'
 import morgan from "morgan";
 import cors from "cors"
-
+import testimonyRouter from './routes/testimonyRouter.js'
 dotenv.config();
 const app = express();
 app.use(cors())
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', userRoute);
 app.use('/posts', postRouter);
-
+app.use('/testimony', testimonyRouter);
 
 app.use('/*', (req, res) => {
   res.status(404).json({ status: 404, message: "Url Not Found" });
