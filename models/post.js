@@ -18,7 +18,4 @@ const postSchema = new mongoose.Schema({
 });
 mongoose.model('Post', postSchema);
 }
-// Export the model as the default export
-// module.exports = mongoose.models.Post ||
-
 export default Post;

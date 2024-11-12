@@ -1,22 +1,87 @@
 import Post from '../models/post.js';
 import uploadFile from "../helpers/cloud.js"
+// export const createPost = async (req, res) => {
+//   try {
+//     const response = await uploadFile(req.file);
+// console.log("Upload response:", response); // Add this line to debug
+
+//     if (!response || !response.secure_url) {
+//       throw new Error("File upload failed.",Error);
+//       // console.log(Error);
+//     }
+
+//     const newPost = await Post.create({
+//       image: response.secure_url,
+//       body: req.body.body,
+//       author: req.body.name,
+//     });
+
+//     console.log("Response before sending:", {
+//       status: 'success',
+//       message: 'Your post was created successfully',
+//       newPost,
+//     });
+
+//     return res.status(200).json({
+//       status: 'success',
+//       message: 'Your post was created successfully',
+//       newPost,
+//     });
+//   } catch (err) {
+//     console.error("Error in createPost:", err);
+//     return res.status(500).json({
+//       status: 'error',
+//       message: err.message || 'Something went wrong while creating the post',
+//     });
+   
+//   }
+// };
+
 export const createPost = async (req, res) => {
-  const response = await uploadFile(req.file, res);
-  try{
-      const newPost = await Post.create({
-          image: response.secure_url,
-          body: req.body.body,
-          author: req.body.name
-      });
-      return res.status(200).json({ 
-        status: 'success', 
-        message: 'your post was created successfully',
-        newPost
-      })
-  }catch(err){
-   return res.status(400).json({message: err.message})
+  try {
+    // Check if file exists in the request
+    if (!req.file) {
+      throw new Error("No file uploaded.");
+    }
+
+    // Attempt to upload the file
+    const response = await uploadFile(req.file);
+    console.log("Upload response:", response); // Debugging log
+
+    // Check if the upload returned the expected data
+    if (!response || !response.secure_url) {
+      throw new Error("File upload failed."); // Corrected error throw syntax
+    }
+
+    // Attempt to create a new post in the database
+    const newPost = await Post.create({
+      image: response.secure_url,
+      body: req.body.body,
+      author: req.body.name,
+    });
+
+    console.log("Response before sending:", {
+      status: 'success',
+      message: 'Your post was created successfully',
+      newPost,
+    });
+
+    // Return success response
+    return res.status(200).json({
+      status: 'success',
+      message: 'Your post was created successfully',
+      newPost,
+    });
+  } catch (err) {
+    console.error("Error in createPost:", err);
+    return res.status(500).json({
+      status: 'error',
+      message: err.message || 'Something went wrong while creating the post',
+    });
   }
-}
+};
+
+
 
 
 
@@ -25,7 +90,7 @@ export const getPost = async (req, res) => {
         const posts = await Post.find();
         return res.status(200).json(posts)
     } catch(err){
-      return res.status(400).json({message: err.message})
+      return res.status(404).json({message: err.message})
     }
 }
 
@@ -53,7 +118,7 @@ export const getPostById = async (req, res) => {
         post,
       });
     } catch (error) {
-      return res.status(400).json({ message: error.message });
+      return res.status(404).json({ message: error.message });
     }
   };
   

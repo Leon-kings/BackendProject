@@ -5,10 +5,11 @@ import {createPost , getPost , getPostById , updatePost , deletePost} from "../c
 const router = express.Router();
 
 const storage = multer.memoryStorage(); // or use diskStorage if saving to disk
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 router.get('/', getPost);
 router.post('/', upload.single('image'), createPost);
-// router.post('/',upload.single("image"), createPost);
+
 router.get('/:id', getPostById);
 router.put('/:id', updatePost);
 router.delete('/:id', deletePost);
