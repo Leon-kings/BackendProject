@@ -22,6 +22,10 @@ const postSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+   type: {
+        type: String,
+        required: true
     }
 });
 mongoose.model('Post', postSchema);

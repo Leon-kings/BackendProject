@@ -3,36 +3,37 @@ import Post from "../models/post.js";
 // create PcreatePost post
 export const createPost = async (req, res) => {
   try {
-    const post = await Post.findOne({ email: req.body.email });
-    if (post) {
-      return res
-        .status(400)
-        .json({
-          status: "failed",
-          message: "Post content with this email already exists",
-        });
+    // Check for email existence before creating new post
+    const existingPost = await Post.findOne({ email: req.body.email });
+    if (existingPost) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Post content with this email already exists",
+      });
     }
+
+    // Create new post with proper type validation
     const newPost = await Post.create({
       name: req.body.name,
       email: req.body.email,
-      price: req.body.price,
+      price: parseFloat(req.body.price), // Validate and convert price to float
+      type: req.body.type, // No type validation explicitly shown, consider adding
       category: req.body.category,
-      capacity: req.body.capacity
-   
+      capacity: req.body.capacity,
     });
-  return res
-      .status(200)
-      .json({
-        status: "success",
-        message: "Post created successfully see you in upcomming 4 days",
-        data: newPost,
-        
-      });
-   
-      
+
+    // Return successful response with the created post
+    return res.status(200).json({
+      status: "success",
+      message: "Post created successfully!",
+      data: newPost,
+    });
   } catch (err) {
-   return res.status(400).json({ status: "failed", message: err.message });
-    
+    console.error(err); // Log the error for debugging
+    return res.status(400).json({
+      status: "failed",
+      message: "An error occurred while creating the post",
+    }); // Generic error message for the user, log specific details for debugging
   }
 };
 // get all PcreatePost 
