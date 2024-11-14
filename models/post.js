@@ -1,17 +1,25 @@
 import mongoose from 'mongoose';
-// const mongoose = require('mongoose');
+
 const Post=()=>{
 const postSchema = new mongoose.Schema({
     // ... your post schema fields
-    image: {
+    email: {
         type: String,
         required: true
     },
-    author: {
+   price: {
         type: String,
         required: true
     },
-    body: {
+   category: {
+        type: String,
+        required: true
+    },
+    capacity: {
+        type: String,
+        required: true
+    },
+    name: {
         type: String,
         required: true
     }

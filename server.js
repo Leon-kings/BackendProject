@@ -2,11 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
-import postRouter from './routes/postRouter.js'
+// import postRouter from './routes/postRouter.js'
 import morgan from "morgan";
 import cors from "cors"
 import testimonyRouter from './routes/testimonyRouter.js'
-// import searchRouter from './routes/searchRouter.js'
+// const imageRoutes = require('./routes/imageRoutes.js')
+import postRouter from './routes/postRouter.js'
 import bookRouter from './routes/bookRouter.js'
 dotenv.config();
 const app = express();
@@ -31,7 +32,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/posts', postRouter);
 app.use('/testimony', testimonyRouter);
-// app.use('/search', searchRouter);
+// app.use('/api/images', imageRoutes);
 app.use('/Booking', bookRouter);
 
 app.use('/*', (req, res) => {

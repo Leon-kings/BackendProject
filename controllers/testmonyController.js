@@ -25,8 +25,7 @@ export const createTestimony = async (req, res) => {
         data: newTestimony,
         
       });
-   
-      
+       
   } catch (err) {
    return res.status(400).json({ status: "failed", message: err.message });
     
