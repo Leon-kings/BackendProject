@@ -4,7 +4,7 @@ export const createPost = async (req, res) => {
   try {
     // Check for email existence before creating new post
     console.log('Request Body:', req.body);
-    const existingPost = await Post.findOne({ email: req.body.email });
+    const existingPost = await Post.findOne({ url: req.body.url });
 
     if (!existingPost) {
       // Create new post with proper type validation (consider adding)
@@ -18,6 +18,7 @@ export const createPost = async (req, res) => {
         type: req.body.type,
         category: req.body.category,
         capacity: req.body.capacity,
+        url:req.body.url
       });
 
       // Return successful response with the created post
@@ -76,6 +77,45 @@ export const getPosts = async (req, res) => {
     return res.status(400).json({
       status: "failed",
       message: err.message,
+    });
+  }
+};
+// get post byID
+export const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract `id` from request parameters
+
+    // Find post by ID
+    const post = await Post.findById(id);
+
+    // Check if the post exists
+    if (!post) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Post not found",
+      });
+    }
+
+    // Return the post
+    return res.status(200).json({
+      status: "success",
+      message: "Post fetched successfully",
+      data: post,
+    });
+  } catch (err) {
+    console.error("Error fetching post by ID:", err);
+
+    // Handle invalid ObjectId error
+    if (err.kind === "ObjectId") {
+      return res.status(400).json({
+        status: "failed",
+        message: "Invalid post ID format",
+      });
+    }
+
+    return res.status(500).json({
+      status: "failed",
+      message: "An error occurred while fetching the post",
     });
   }
 };

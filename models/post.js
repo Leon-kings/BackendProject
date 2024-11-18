@@ -25,6 +25,10 @@ const postSchema = new mongoose.Schema({
    type: {
         type: String,
         required: true
+    },
+    url: {
+        type: String,
+        required: true
     }
 
 });
