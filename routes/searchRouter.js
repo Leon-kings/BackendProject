@@ -1,9 +1,7 @@
 import express from 'express';
-import { getData } from '../controllers/searchController.js';
+import { searchPosts } from "../controllers/searchController.js";
 const router = express.Router();
-
-router.get('/', getData);
-
-
+// Route for searching posts
+router.get("/", searchPosts);
 
 export default router;
