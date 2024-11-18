@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
-
-const Post=()=>{
 const postSchema = new mongoose.Schema({
     // ... your post schema fields
-    email: {
-        type: String,
-        required: true
-    },
+    email: { 
+         type: String,
+         required: true, 
+         unique: true
+         },
    price: {
         type: String,
         required: true
@@ -27,7 +26,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+
 });
-mongoose.model('Post', postSchema);
-}
-export default Post;
+export default mongoose.model('Post',   
+    postSchema);

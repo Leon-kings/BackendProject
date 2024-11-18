@@ -2,11 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoute from './routes/userRouter.js'
-// import postRouter from './routes/postRouter.js'
 import morgan from "morgan";
 import cors from "cors"
 import testimonyRouter from './routes/testimonyRouter.js'
-// const imageRoutes = require('./routes/imageRoutes.js')
 import postRouter from './routes/postRouter.js'
 import bookRouter from './routes/bookRouter.js'
 dotenv.config();
@@ -23,8 +21,6 @@ mongoose
   .connect(process.env.DB)
   .then((res) => console.log("db connected "))
   .catch((err) => console.log(err.message));
-
-
 app.get('/', (req, res) => {
   res.status(200).json({ status: 'OK', message: "Welcome to Leon-shop API" });
 })
@@ -32,7 +28,6 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/Posts', postRouter);
 app.use('/testimony', testimonyRouter);
-// app.use('/api/images', imageRoutes);
 app.use('/Booking', bookRouter);
 
 app.use('/*', (req, res) => {
