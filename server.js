@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRoute);
-app.use('/Posts', postRouter);
+app.use('/posts', postRouter);
 app.use('/testimony', testimonyRouter);
 app.use('/Booking', bookRouter);
 

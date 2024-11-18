@@ -1,4 +1,5 @@
 import Post from "../models/post.js";
+import mongoose from "mongoose";
 export const createPost = async (req, res) => {
   try {
     // Check for email existence before creating new post
@@ -9,12 +10,6 @@ export const createPost = async (req, res) => {
       // Create new post with proper type validation (consider adding)
 
       // Example type validation (add more checks as needed)
-      if (typeof req.body.type !== 'string') {
-        return res.status(400).json({
-          status: "failed",
-          message: "Invalid type provided"
-        });
-      }
 
       const newPost = await Post.create({
         name: req.body.name,
@@ -44,30 +39,68 @@ export const createPost = async (req, res) => {
 };
 // get all PcreatePost 
 export const getPosts = async (req, res) => {
-    try {
-      const {limit = 10 ,search, page } = req.params;
-      const post = await Post.find().limit(limit)
-    return res
-        .status(200)
-        .json({
-          status: "success",
-          message: "post fetched successfully",
-          data: post,
-        });
-    } catch (err) {
-    return res.status(400).json({ status: "failed", message: err.message });
-    }
-  };
+  try {
+    const { limit = 10, search = "", page = 1 } = req.query;
+
+    // Convert limit and page to integers
+    const limitInt = parseInt(limit, 10);
+    const pageInt = parseInt(page, 10);
+
+    // Build query for search (if applicable)
+    const query = search
+      ? { name: { $regex: search, $options: "i" } } // Example: search by name (case-insensitive)
+      : {};
+
+    // Fetch posts with pagination
+    const posts = await Post.find(query)
+      .limit(limitInt)
+      .skip((pageInt - 1) * limitInt); // Skip results for previous pages
+
+    // Total number of posts for pagination
+    const totalPosts = await Post.countDocuments(query);
+
+    return res.status(200).json({
+      status: "success",
+      message: "Posts fetched successfully",
+      data: {
+        posts,
+        pagination: {
+          totalPosts,
+          totalPages: Math.ceil(totalPosts / limitInt),
+          currentPage: pageInt,
+        },
+      },
+    });
+  } catch (err) {
+    console.error("Error fetching posts:", err);
+    return res.status(400).json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};
+
 
   // delete PcreatePost post
 
-export const deletePost = async (req, res) => {
+  export const deletePost = async (req, res) => {
     try {
-      const post = await Post.findByIdAndDelete(req.params.id);
-      if (!post) throw Error("post not found");
-     return res.json({ message: "post deleted successfully" });
+      const { id } = req.params;
+  
+      // Validate id format
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid post ID" });
+      }
+  
+      const post = await Post.findByIdAndDelete(id);
+  
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+  
+      return res.json({ message: "Post deleted successfully" });
     } catch (error) {
-     return res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   };
   export   
