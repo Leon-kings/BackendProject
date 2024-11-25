@@ -1,41 +1,49 @@
+import crypto from 'crypto'
 import Post from "../models/post.js";
 import mongoose from "mongoose";
 export const createPost = async (req, res) => {
   try {
-    // Check for email existence before creating new post
-    console.log('Request Body:', req.body);
+    // Optional: Drop the problematic index if it exists
+    try {
+      await mongoose.connection.collection('posts').dropIndex('details_1');
+    } catch (error) {
+      // Ignore error if index doesn't exist
+      console.log('Index might not exist:', error.message);
+    }
+
     const existingPost = await Post.findOne({ url: req.body.url });
+    console.log('the existing url is ', existingPost);
 
     if (!existingPost) {
-      // Create new post with proper type validation (consider adding)
-
-      // Example type validation (add more checks as needed)
+      const randomString = crypto.randomBytes(16).toString('hex');
 
       const newPost = await Post.create({
         name: req.body.name,
         email: req.body.email,
-        price: parseFloat(req.body.price), // Validate and convert price to float
+        price: parseFloat(req.body.price),
         type: req.body.type,
         category: req.body.category,
         capacity: req.body.capacity,
-        url:req.body.url
+        url: req.body.url,
+        index: randomString,
       });
 
-      // Return successful response with the created post
       return res.status(200).json({
-        status: "success",
-        message: "Post created successfully!",
+        status: 'success',
+        message: 'Post created successfully!',
         data: newPost,
       });
+    } else {
+      res
+        .status(400)
+        .json({ status: 'failed', message: 'The url already exists' });
     }
   } catch (err) {
-    console.error(err); // Log the error for debugging
+    console.error(err);
     return res.status(400).json({
-      status: "failed",
-      message: "An error occurred while creating the post",
+      status: 'failed',
+      message: err.message,
     });
-  } finally {
-    // Optional: You can add cleanup logic here if needed (e.g., closing connections)
   }
 };
 // get all PcreatePost 

@@ -3,33 +3,33 @@ const postSchema = new mongoose.Schema({
     // ... your post schema fields
     email: { 
          type: String,
-         required: true, 
+        //  required: true, 
        
          },
    price: {
         type: String,
-        required: true
+        // required: true
     },
    category: {
         type: String,
-        required: true
+        // required: true
     },
     capacity: {
         type: String,
-        required: true
+        // required: true
     },
     name: {
         type: String,
-        required: true
+        // required: true
     },
    type: {
         type: String,
-        required: true
+        // required: true
     },
     url: {
         type: String,
-        required: true,
-        unique:true
+        required: true
+        // unique:true
     }
 
 });
