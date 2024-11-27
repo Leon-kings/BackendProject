@@ -8,6 +8,7 @@ import testimonyRouter from './routes/testimonyRouter.js'
 import postRouter from './routes/postRouter.js'
 import bookRouter from './routes/bookRouter.js'
 import searchRouter from './routes/postRouter.js'
+// import  paymentRoutes from './routes/paymentRoutes.js'
 dotenv.config();
 const app = express();
 app.use(cors())
@@ -31,6 +32,7 @@ app.use('/posts', postRouter);
 app.use('/testimony', testimonyRouter);
 app.use('/Booking', bookRouter);
 app.use('/search', searchRouter);
+// app.use("/payment", paymentRoutes);
 app.use('/*', (req, res) => {
   res.status(404).json({ status: 404, message: "Url Not Found" });
 })
